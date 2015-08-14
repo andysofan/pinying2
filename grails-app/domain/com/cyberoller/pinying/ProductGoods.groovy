@@ -39,7 +39,7 @@ class ProductGoods {
 	
 	//是否删除 
 	Boolean xdel = false
-	Date 	delDate
+	Date 	delDate=null
 	
 	Date 	dateCreated
 	Date 	lastUpdated
@@ -63,8 +63,7 @@ class ProductGoods {
 		xcolor(nullable:false)
 		xdesc(nullable:false)
 		xdel(nullable:false)
-		xdel(nullable:false)
-		delDate(nullable:false)
+		delDate(nullable:true)
     }
 
 	def beforeInsert(){
