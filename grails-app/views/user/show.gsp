@@ -36,7 +36,11 @@
 		<a href="#show-user" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 
 		<div id="show-user" class="content scaffold-show" role="main">
-			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
+			<h1><g:message code="default.show.label" args="[entityName]" />
+				<g:if test="${userInstance?.xdel}">
+				已经删除
+				</g:if>
+			</h1>
 			<g:if test="${flash.message}">
 			<div class="message" role="status">${flash.message}</div>
 			</g:if>

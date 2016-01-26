@@ -19,6 +19,7 @@
 	<script type="text/javascript" src="${resource(dir:"js/pinying/common", file:"type.js")}"></script>
 	<script type="text/javascript" src="${resource(dir:"js/pinying", file:"filter.js")}"></script>
 	<script type="text/javascript">
+		var isManager = false;
 	    (function($){
 	        $(function(){
 	            $(".ad01 a:last-child").css("margin-right","0");
@@ -151,6 +152,11 @@
 		
 	</script>
 	</shiro:isLoggedIn>
+	<shiro:hasRole name="${'manager'.toUpperCase()}">
+	<script type="text/javascript">
+		isManager = true;
+	</script>
+	</shiro:hasRole>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$("#searchAll").bind('keydown',function(event){

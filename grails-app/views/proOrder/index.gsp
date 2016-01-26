@@ -33,7 +33,7 @@
 					<tr >
 						<g:sortableColumn property="id" params="${filterParams?filterParams:params}" title="订单号" />
 						<g:sortableColumn property="cjNum" params="${filterParams?filterParams:params}" title="决裁号" />
-						<g:sortableColumn property="pjNum" params="${filterParams?filterParams:params}" title="PJ号" />
+						<g:sortableColumn property="pjNum" params="${filterParams?filterParams:params}" title="会议名称" />
 						<g:sortableColumn property="costDepart" params="${filterParams?filterParams:params}" title="费用负担部门" />
 						<g:sortableColumn property="price" params="${filterParams?filterParams:params}" title="订单金额" />
 					

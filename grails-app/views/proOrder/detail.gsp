@@ -13,16 +13,19 @@
 		<a href="#list-order" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
 		<div id="list-order" class="content scaffold-list" role="main">
 			<h1>
-				订单详情  
+				订单详情  <a style="font-size:14px" href="${createLink(controller:'proOrder', action:'deleteOrder2', id:order?.id)}" class="delete" onclick="return confirm('确定?');"> 删除订单 </a>
+				<g:if test="${order?.xdel}">
+				已经删除
+				</g:if>
 			</h1>
 			
 			<h5>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				单号: ${order?.id }
 				&nbsp;&nbsp;&nbsp;&nbsp; 
-				下单时间:&nbsp;&nbsp;<g:formatDate date="${order.lastUpdated}" />
+				下单时间:&nbsp;&nbsp;<g:formatDate date="${order?.lastUpdated}" />
 				&nbsp;&nbsp;&nbsp;&nbsp; 
-				用户:&nbsp;&nbsp;${order.user?.fullname}
+				用户:&nbsp;&nbsp;${order?.user?.fullname}
 			</h5>
 
 			<g:if test="${flash.message}">
@@ -36,7 +39,7 @@
 			<label>决裁号</label>
 			<span>${order?.cjNum}</span>
 			
-			<label>PJ号</label>
+			<label>会议名称</label>
 			<span>${order?.pjNum}</span>
 			
 			</li>

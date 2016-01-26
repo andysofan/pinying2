@@ -126,7 +126,14 @@
 {{# for(var i = 0, len = d.list.length; i < len; i++){ }}
 	<div style="width:750px;height:1px;margin:0px auto;padding:0px;background-color:#D4D4D4;overflow:hidden;"></div>
     <li id="comment_{{ d.list[i].id }}">
-        <span class="tb-r-buyer" title="{{ d.list[i].userName }}">{{ d.list[i].userName }}</span>
+		
+		<span class="tb-r-buyer" title="{{ d.list[i].userName }}">{{ d.list[i].userName }}
+		{{#if(isManager==true){ }}
+		<br><a href="javascript:deleteComment('{{ d.list[i].id }}');" style="color: #f00;line-height: 30px;">删除评论</a>
+		{{#} }}
+		</span>
+		
+		
         <div class="tb-r-bd">
 			<div class="tb-r-cnt ">
 				{{ d.list[i].cnt }}
@@ -169,7 +176,7 @@
 	var urlList = "${createLink(controller:'index', action:'commentList')}";
 	var proId = ${productInstance?.id};
 	function loadComment(){
-		$.getJSON(urlCn, {proId:proId}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+		$.getJSON(urlCn, {proId:proId,rund:Math.random()}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
 			if(res.pages==0){
 				return;
 			}
@@ -178,7 +185,7 @@
 		        pages: res.pages, //通过后台拿到的总页数
 		        curr: 1, //初始化当前页
 		        jump: function(e){ //触发分页后的回调
-		            $.getJSON(urlList, {proId:proId,curr: e.curr}, function(res){
+		            $.getJSON(urlList, {proId:proId,curr: e.curr,rund:Math.random()}, function(res){
 		                e.pages = e.last = res.pages; //重新获取总页数，一般不用写
 		                //渲染
 		                //var view = document.getElementById('view1'); //你也可以直接使用jquery
@@ -247,6 +254,24 @@
 				document.getElementById('commentCnt').value='';
 				appendNum = 0;
 			}
+		}).fail(function(jqXHR, textStatus){
+			alert( "Request failed: " + textStatus );
+		});
+	}
+
+	function deleteComment(id){
+		if(!confirm('你确定删除吗？')){
+			return false;
+		}
+		$.ajax({
+			url: "${createLink(controller:'proComments', action:'del')}",
+			type: "POST",
+			data: { cId : id },
+			dataType: "html"
+		}).done(function(result){
+			//alert(result);
+			//$(obj).html(result)
+			loadComment();
 		}).fail(function(jqXHR, textStatus){
 			alert( "Request failed: " + textStatus );
 		});

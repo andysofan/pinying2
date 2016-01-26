@@ -28,7 +28,7 @@
 		</li>
 		
 		<li class="fieldcontain required clearFix">
-			<label>PJ号</label>
+			<label>会议名称</label>
 			<span><g:textField name="pjNum" maxlength="20"  value="${pjNum }" /></span>
 		</li>
 		<li class="fieldcontain required clearFix">

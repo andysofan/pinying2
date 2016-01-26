@@ -25,6 +25,9 @@ class ProOrder {
 	//订单状态
 	//int status = 0
 	
+	//是否删除
+	Boolean xdel = false
+	
 	double price=0
 	
 	int nums=1
@@ -40,6 +43,7 @@ class ProOrder {
 		pjNum(nullable:true)
 		costDepart(nullable:true)
 		user(nullable:true)
+		xdel(nullable:false)
 		
 		
 		consigneeName(nullable:true)

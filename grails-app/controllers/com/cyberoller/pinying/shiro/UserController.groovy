@@ -5,6 +5,9 @@ package com.cyberoller.pinying.shiro
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+import org.apache.shiro.crypto.SecureRandomNumberGenerator
+import org.apache.shiro.crypto.hash.Sha512Hash
+
 @Transactional(readOnly = true)
 class UserController {
 
@@ -22,6 +25,8 @@ class UserController {
 			if(params.email){
 				like("email", "%${params.email}%")
 			}
+			//xdel
+			eq("xdel", false)
 		}
 		
 		def results = User.createCriteria().list(params,cel);
@@ -93,8 +98,9 @@ class UserController {
             notFound()
             return
         }
-
-        userInstance.delete flush:true
+		userInstance.username = userInstance.username+" --del" 
+		userInstance.xdel = true
+        userInstance.save flush:true
 
         request.withFormat {
             form multipartForm {
@@ -119,6 +125,7 @@ class UserController {
 	 * 重置密码
 	 **/
 	def resetPassword(Long id){
+		log.info("userInfo:"+id);
         def userInstance = User.get( id )
         if (!userInstance) {
             flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), username])
@@ -131,7 +138,7 @@ class UserController {
 	/**
 	 * 重置密码
 	 **/
-	
+	@Transactional
     def reset(Long id, Long version){
 		def userInstance = User.get( id )
         if (!userInstance) {
@@ -151,7 +158,7 @@ class UserController {
         }
 		try{
 			userService.resetPassword(userInstance, params.password, params.passwordConfirm)
-			flash.message = message(code: 'user.password.reset', args: [username])
+			flash.message = message(code: 'user.password.reset', args: [userInstance.username])
 		}catch(e){
 			flash.message = e.getMessage()
 			render(view: "/user/resetPassword", model: [userInstance: userInstance])

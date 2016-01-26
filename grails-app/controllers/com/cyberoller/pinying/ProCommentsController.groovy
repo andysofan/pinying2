@@ -30,6 +30,17 @@ class ProCommentsController {
 		render "${result}"
 	}
 	
+	def del(){
+		log.info "comments.add ${params}"
+		def result="success"
+		try{
+			def count = ProComments.executeUpdate("delete from ProComments t where t.id=?", [Long.valueOf(params.cId)])
+		}catch(e){
+			result = e.getMessage()
+		}
+		render "${result}"
+	}
+	
 	
 	
 	

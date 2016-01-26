@@ -33,6 +33,8 @@ class ProOrderController {
 			if(params.consigneeMobile){
 				like("consigneeMobile", "%${params.consigneeMobile}%")
 			}
+			//xdel
+			eq("xdel", false)
 		}
 		
 		def results = ProOrder.createCriteria().list(params,cel);
@@ -76,6 +78,8 @@ class ProOrderController {
 				ge("lastUpdated", q_date)
 			}
 			order("lastUpdated", "desc")
+			//xdel
+			eq("xdel", false)
 		}
 		
 		def results = ProOrder.createCriteria().list(params,cel)
@@ -113,6 +117,22 @@ class ProOrderController {
 			}
 		}
 		redirect (action:"list")
+	}
+	
+	//@Transactional(readOnly = false)
+	def deleteOrder2(long id){
+		log.info "order..${params}"
+		def userId = session.getAttribute("userId")
+		def user = User.get(userId)
+		
+		def order = ProOrder.get(id)
+		//userInstance.save flush:true
+		if(user && order){
+			order.xdel = true;
+			order.save flush:true;
+			//def count1 = ProOrderDetail.executeUpdate("update ProOrderDetail set  where t.order.id=?", [id])
+		}
+		redirect (action:"index")
 	}
 	
 }

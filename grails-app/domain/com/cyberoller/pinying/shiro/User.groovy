@@ -31,6 +31,8 @@ class User {
 	
 	//虚拟货币
 	double money=0
+	//是否删除
+	Boolean xdel = false
     
     static hasMany = [ roles: Role, permissions: String ]
 
@@ -45,6 +47,7 @@ class User {
         isActive(nullable:false)
 		createdBy(nullable:true)
 		lastModifiedBy(nullable:true)
+		xdel(nullable:false)
     }
     
 	def beforeValidate(){
